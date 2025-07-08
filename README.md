@@ -4,14 +4,20 @@ Installation (Ubuntu 20.04.1 LTS):
 
 --Clone the repository--
 
-git clone git@github.com:harfuchcardenas/humidity-control.git cd zephyr_build
+git clone git@github.com:harfuchcardenas/zephyr_build.git
 
 --Access directory--
 
 cd zephyr_build
 
---Give execution permission-- chmod +x ./build-file
+--Give execution permission--
 
---Run script-- ./build-file
+chmod +x ./build-file
 
-Notes: If it is the first time the script is been run, then an Error will prompt out as there the Virtual Environment is created and the directories created are not updated in runtime, so re-run ./build-file. If the script is run consecutively for different source directory it is needed to remove manually the build/ directory before the script is run again.
+--Run script--
+
+./build-file
+
+Notes:
+If any error comes up just re-run the script or follow the given instructions.
+If the script is run consecutively for different source directory it is needed to remove manually the build/ directory before the script is run again.
