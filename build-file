@@ -77,8 +77,6 @@ pwd &&
 source $current_dir/.venv/bin/activate &&
 deactivate'");
 
-# Store final directory choice
-my $src_dir = navigate_directory(); #Correct directory of source code.
 my $zephyr_dir = $current_dir;
 $zephyr_dir .= '/zephyr';
 
@@ -93,7 +91,7 @@ west packages pip --install &&
 cd $zephyr_dir &&
 west sdk install &&
 deactivate'") == 0
-or die "Could not update west, virtual environment eactivated: $!";
+or die "Could not update west, virtual environment deactivated: $!";
 
 # Store final directory choice
 my $src_dir = navigate_directory(); #Correct directory of source code.
@@ -103,6 +101,6 @@ source $current_dir/.venv/bin/activate &&
 cd  $zephyr_dir &&
 west build -p always -b nrf7002dk/nrf5340/cpuapp --source-dir $src_dir --build-dir $current_dir/zephyr/build &&
 deactivate'") == 0
-or die "Could not update west, virtual environment eactivated: $!";
+or die "Could not update west, virtual environment deactivated: $!";
 system("echo 'Virtual environment deactivated'");
 exit 0;
