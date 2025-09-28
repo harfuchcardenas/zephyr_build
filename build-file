@@ -5,7 +5,7 @@ use Cwd;
 
 # Function to navigate directories interactively
 my $build_base = cwd();  # Get current working directory
-my $board = 'nrf7002dk/nrf5340/cpuapp';
+my $board = 'az3166_iotdevkit';
 my $current_dir;
 my $zephyr_dir;
 
