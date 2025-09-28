@@ -84,10 +84,10 @@ if (-d $target_dir) {
 #Get pwd via cwd
 $current_dir = $build_base; # Stores the current directory
 my $status = system("bash -c 'dpkg -s python3-venv >/dev/null 2>&1'");
-$current_dir .= "/zephyrproject";
+$current_dir = $target_dir;
 
 # Start navigation from 'zephyrproject'
-chdir("zephyrproject") or die "Failed to enter 'zephyrproject': $!\n";
+chdir("$target_dir") or die "Failed to enter 'zephyrproject': $!\n";
 system("bash -c '
 python3 -m venv $current_dir/.venv &&
 pwd &&
