@@ -153,8 +153,11 @@ $zephyr_dir .= "/zephyr";
 system("bash -c '
 source $current_dir/.venv/bin/activate &&
 cd  $current_dir &&
+
 pip install west &&
-if [ -d .west ]; then echo \"Workspace already initialized.\"; else west init && west update; fi &&
+
+if [ -d .west ]; then echo \"Workspace already initialized.\"; else west init -m https://github.com/harfuchcardenas/zephyr.git --mr master; fi &&
+
 west update &&
 west zephyr-export &&
 west packages pip --install &&
