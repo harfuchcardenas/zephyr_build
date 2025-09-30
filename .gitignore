@@ -1,0 +1,5 @@
+zephyrproject/.venv/
+zephyrproject/.west/
+zephyrproject/bootloader/
+zephyrproject/modules/
+zephyrproject/tools/
