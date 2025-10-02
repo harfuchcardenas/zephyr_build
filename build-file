@@ -104,6 +104,19 @@ sub board_selection {
 
 }
 
+# Install git
+if (system("command -v git > /dev/null") != 0) {
+    print "Git is not installed. Installing now...\n";
+    system("sudo apt update && sudo apt install -y git") == 0
+        or die "Falied to install Git!\n";
+} else {
+    print "Git is already installed!\n";
+}
+
+-#Install required Dependencies
+-system("echo To install dependencies\n");
+-system("sudo apt install --no-install-recommends git cmake ninja-build gperf ccache dfu-util device-tree-compiler wget python3-dev python3-pip python3-setuptools python3-tk python3-wheel xz-utils file make gcc gcc-multilib g++-multilib libsdl2-dev libmagic1");
+
 # Track missing packages
 my @missing;
 my $target_dir = cwd();  # Get current working directory
