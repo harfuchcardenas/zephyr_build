@@ -83,7 +83,6 @@ sub board_selection {
         source \"$current_dir/.venv/bin/activate\" &&
         cd  \"$zephyr_dir\" &&
         west boards | sort > blist'");
-        
         system("echo 'Virtual environment deactivated: '; pwd;cd ..");
         my $file = $zephyr_dir;
         $file .= '/blist';
@@ -148,18 +147,15 @@ system("bash -c '
 source $current_dir/.venv/bin/activate &&
 cd  $current_dir &&
 pip install west &&
-if [ -d .west ]; then echo \"Workspace already initialized.\"; else west init && west update; fi &&
+west init ./ && 
 west update &&
-west zephyr-export &&
+west zephyr-export
 west packages pip --install &&
 cd $zephyr_dir &&
-west sdk install &&
 deactivate'") == 0
-or die "Could not update west, virtual environment deactivated: $!";
-
+    or die "Could not update west, virtual environment deactivated: $!"; 
 # Store final directory choice
 my $src_dir = navigate_directory(); #Correct directory of source code.
-
 
 my $boards_dir = $zephyr_dir;
 $boards_dir .= "/boards";
