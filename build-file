@@ -80,11 +80,10 @@ sub board_selection {
         my @boards_lines;
         my $exit_code = system("bash -c '
         source \"$current_dir/.venv/bin/activate\" &&
-        cd  \"$zephyr_dir\" && pwd &&
-        west boards | sort > ~/blist && return ~/blist'");
+        cd  \"$zephyr_dir\" && pwd && touch blist &&
+        west boards | sort > ~/blist'");
         $exit_code = system('cat ~/blist');
-        
-	#Check if command succeeded
+	    #Check if command succeeded
         if ($exit_code =! 1) {
 		# my $code = $exit_code >> 8;
             print "Failed to list available boards $exit_code.\n";
@@ -151,18 +150,15 @@ system("bash -c '
 source $current_dir/.venv/bin/activate &&
 cd  $current_dir &&
 pip install west &&
-if [ -d .west ]; then echo \"Workspace already initialized.\"; else west init && west update; fi &&
+west init ./ && 
 west update &&
-west zephyr-export &&
+west zephyr-export
 west packages pip --install &&
 cd $zephyr_dir &&
-west sdk install &&
 deactivate'") == 0
-or die "Could not update west, virtual environment deactivated: $!";
-
+    or die "Could not update west, virtual environment deactivated: $!"; 
 # Store final directory choice
 my $src_dir = navigate_directory(); #Correct directory of source code.
-
 
 my $boards_dir = $zephyr_dir;
 $boards_dir .= "/boards";
