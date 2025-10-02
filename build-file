@@ -137,10 +137,10 @@ if (-d $target_dir) {
 #Get pwd via cwd
 $current_dir = $build_base; # Stores the current directory
 my $status = system("bash -c 'dpkg -s python3-venv >/dev/null 2>&1'");
-$current_dir = $target_dir;
+$current_dir .= "/zephyrproject";
 
 # Start navigation from 'zephyrproject'
-chdir("$target_dir") or die "Failed to enter 'zephyrproject': $!\n";
+chdir("zephyrproject") or die "Failed to enter 'zephyrproject': $!\n";
 system("bash -c '
 python3 -m venv $current_dir/.venv &&
 pwd &&
@@ -153,11 +153,8 @@ $zephyr_dir .= "/zephyr";
 system("bash -c '
 source $current_dir/.venv/bin/activate &&
 cd  $current_dir &&
-
 pip install west &&
-
-if [ -d .west ]; then echo \"Workspace already initialized.\"; else west init -m https://github.com/harfuchcardenas/zephyr.git --mr master; fi &&
-
+if [ -d .west ]; then echo \"Workspace already initialized.\"; else west init && west update; fi &&
 west update &&
 west zephyr-export &&
 west packages pip --install &&
@@ -165,17 +162,17 @@ cd $zephyr_dir &&
 west sdk install &&
 deactivate'") == 0
 or die "Could not update west, virtual environment deactivated: $!";
-system("echo 'Virtual environment deactivated'");
 
 # Store final directory choice
 my $src_dir = navigate_directory(); #Correct directory of source code.
+
 
 my $boards_dir = $zephyr_dir;
 $boards_dir .= "/boards";
 
 chdir("$boards_dir") or die "Failed to enter board directory' $boards_dir': $!\n";
 
-my $board_selection = $board; #Correct directory board.
+my $board_selection = board_selection(); #Correct directory board.
 my $board_selection = board_selection(); #Correct directory board.
 
 system("bash -c '
