@@ -84,16 +84,9 @@ sub board_selection {
         cd  \"$zephyr_dir\" &&
         west boards | sort > blist'");
         
-        ##Check if command succeeded
-        #if ($exit_code =! 0) {
-        #    my $code = $exit_code >> 8;
-        #    print "❌ Failed to list available boards $code.\n";
-        #}
-        
         system("echo 'Virtual environment deactivated: '; pwd;cd ..");
         my $file = $zephyr_dir;
         $file .= '/blist';
-        print "BLIST: $file";
         open my $fh, '<', $file or die "Could not open 'blist': $!";
         print "✅ List of Boards succeeded with west.\nAvailable boards are:\n";
         @boards_lines = <$fh>;
@@ -107,6 +100,7 @@ sub board_selection {
             print " - $boards_line\n";
         }
 
+        system("echo 'Virtual environment deactivated'");
         print "📝 Please enter the model:";
         $board = <STDIN>; # Reads input from the user
         chomp($board);
@@ -172,7 +166,6 @@ $boards_dir .= "/boards";
 
 chdir("$boards_dir") or die "Failed to enter board directory' $boards_dir': $!\n";
 
-my $board_selection = board_selection(); #Correct directory board.
 my $board_selection = board_selection(); #Correct directory board.
 
 system("bash -c '
