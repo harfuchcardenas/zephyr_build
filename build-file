@@ -68,15 +68,15 @@ sub board_selection {
         print "Enter the board's model: ";
         $board = <STDIN>;
         chomp($board);
-        print "✅ You entered board: $board\nPress enter to build\n";
-        <STDIN>; # Waits for user to press Enter
+        print "✅ You entered board: $board\nbuilding...\n";
+        sleep 3; # Waits for user 3 sec 
         return $board;
     }
     elsif ($choice eq 'L') {
         print "📋 Listing available devices. Please note down the device model in order to enter it manually afterwards...\nPress enter to continue\n";
         <STDIN>; # Waits for user to press Enter
 
-        my $boards_file = 'blist';
+        my $boards_file = '~/blist'; # Variable to store the list of available boards supported by zephyr using west.
         my @boards_lines;
         my $exit_code = system("bash -c '
         source \"$current_dir/.venv/bin/activate\" &&
@@ -136,7 +136,7 @@ my $status = system("bash -c 'dpkg -s python3-venv >/dev/null 2>&1'");
 $current_dir .= "/zephyrproject";
 
 # Start navigation from 'zephyrproject'
-chdir("zephyrproject") or die "Failed to enter 'zephyrproject': $!\n";
+chdir("$current_dir") or die "Failed to enter 'zephyrproject': $!\n";
 system("bash -c '
 python3 -m venv $current_dir/.venv &&
 pwd &&
