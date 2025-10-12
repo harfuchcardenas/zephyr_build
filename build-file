@@ -82,7 +82,7 @@ sub board_selection {
         source \"$current_dir/.venv/bin/activate\" &&
         cd  \"$zephyr_dir\" && pwd && touch blist &&
         west boards | sort > ~/blist'");
-        $exit_code = system('cat ~/blist');
+        $exit_code = system('cat ~/blist; rm ~/blist');
 	    #Check if command succeeded
         if ($exit_code =! 1) {
 		# my $code = $exit_code >> 8;
@@ -120,10 +120,15 @@ if (system("command -v git > /dev/null") != 0) {
 my @missing;
 my $target_dir = cwd();  # Get current working directory
 $target_dir .= "/zephyrproject";
-
+my $build_dir = $target_dir;
+$build_dir .= "/zephyr/build";
 # Check if `zephyrproject` exists inside the given directory
 if (-d $target_dir) {
     print "✅ Directory '$target_dir' exists!\n";
+    if (-d $build_dir) {
+        system('rm -rf $build_dir');
+        print "✅ Removed '$build_dir' to clear pristines!\n";
+    }
 } else {
     print "❌ Directory '$target_dir' does NOT exist!\n";
     print "To create zephyrproject directory\n";
